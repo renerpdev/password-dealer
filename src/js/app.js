@@ -8,9 +8,3 @@ window.PasswordDealer = (opts) => {
 window.PasswordGenerator = (opts) => {
     return new PasswordGenerator(opts);
 };
-
-new PasswordDealer({buttons:[
-        {
-
-        }
-    ]}).init();
