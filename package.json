@@ -47,7 +47,7 @@
   },
   "dependencies": {},
   "browserslist": [
-    "last 5 versions",
+    "last 15 versions",
     "> 1%",
     "maintained node versions",
     "not dead",

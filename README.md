@@ -7,7 +7,7 @@
 
 ## <img align="center" alt="password-dealer example" src="https://raw.githubusercontent.com/2rhop/password-dealer/master/src/images/example1.gif" height=180 title="password-dealer example"/>
 
-### javascript tool that improves your password fields
+### This is an standalone javascript tool that improves your password fields
 
 ## Table of topics
 1. [Installation](#installation)
