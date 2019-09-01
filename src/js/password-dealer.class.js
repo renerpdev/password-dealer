@@ -163,8 +163,6 @@ export default class PasswordDealer {
             }
             const box = document.createElement('div');
             box.classList.add('pwd-item');
-            const inputHeight = input.offsetHeight + 'px';
-            const inputWidth = input.offsetWidth + 'px';
             box.appendChild(input);
             box.setAttribute('id', 'pwd-item-' + i);
             // let computedStyles = (document.defaultView.getComputedStyle(input, null).cssText.split(';'));
@@ -176,12 +174,12 @@ export default class PasswordDealer {
             if (window.ResizeObserver !== undefined) {
                 new ResizeObserver(() => {
                     box.style.height = input.offsetHeight+'px';
-                    // box.style.width = input.offsetWidth+'px';
                 }).observe(input)
             } else {
-                console.log('Your Browser does not supports ResizeObserver api!')
+                console.log('Your Browser does not support ResizeObserver api!')
             }
-            box.style.width = '100%';
+            box.style.width = input.style.width;
+            input.style.width = '100%';
             this.addTolBoxTo(box);
             parent.insertBefore(box, parent.children[position]);// insert the wrapper in the exact input's position
         }

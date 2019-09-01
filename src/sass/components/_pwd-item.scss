@@ -3,13 +3,10 @@
     font-size: 16px;
     position: relative;
     display: block;
-    width: fit-content;
-    height: fit-content;
 
     &__input {
       padding-right: calc(2.2em);
       position: relative;
-      width: 100%;
     }
   }
 
@@ -40,7 +37,12 @@
       align-items: center;
       justify-content: center;
       padding: .1em .5em;
-      min-height: 30px;
+      min-height: 35px;
+      min-width: 35px;
+      @media screen and (max-width: 600px) {
+        min-height: 40px;
+        min-width: 40px;
+      }
       &:first-child {
         padding-top: .2em;
       }
@@ -60,8 +62,12 @@
 
     &__button *, &__icon {
       fill: $button-color !important;
-      height: 15px;
-      width: 15px;
+      height: 16px;
+      width: 16px;
+      @media screen and (max-width: 600px) {
+        height: 18px;
+        width: 18px;
+      }
       pointer-events: none;
     }
   }
