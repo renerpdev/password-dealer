@@ -148,7 +148,7 @@ export default class PasswordDealer {
             input.addEventListener('blur', function (ev) {
                 const next = ev.target.nextSibling;
                 if (next.classList.contains('pwd-toggle')) {
-                    next.style.opacity = 0.3;
+                    next.style.opacity = 0.15;
                 }
             });
             const parent = input.parentNode;
