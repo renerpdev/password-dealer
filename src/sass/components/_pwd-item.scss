@@ -1,10 +1,15 @@
 .pwd { //prefix
   &-item {
+    font-size: 16px;
     position: relative;
-    display: inline-block;
+    display: block;
+    width: fit-content;
+    height: fit-content;
 
     &__input {
-      padding-right: calc(.65em + 7px);
+      padding-right: calc(2.2em);
+      position: relative;
+      width: 100%;
     }
   }
 
@@ -20,6 +25,7 @@
     transform: translateY(-80%);
     background-color: white;
     transition: all .1s ease-in;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, .15);
 
     &.show {
       visibility: visible;
@@ -29,41 +35,60 @@
 
     &__button {
       text-align: right;
-      font-size: 1em;
-      display: block;
+      font-size: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: .1em .5em;
+      min-height: 30px;
       &:first-child {
         padding-top: .2em;
       }
       &:last-child {
         padding-bottom: .2em;
       }
+      &:not(:first-child) {
+        border-top: 1px solid $light-gray;
+      }
       cursor: pointer;
       transition: all .15s ease-in;
 
       &:hover {
-        background-color: rgba(164, 164, 164, 0.15);
+        background-color: $light-gray;
       }
     }
 
     &__button *, &__icon {
-      height: .65em;
-      width: .65em;
+      fill: $button-color !important;
+      height: 15px;
+      width: 15px;
       pointer-events: none;
     }
   }
 
   &-toggle {
-    opacity: .3;
     transition: all .15s;
-    display: inline-flex;
     cursor: pointer;
     position: absolute;
     top: 50%;
     right: 5px;
     transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    height: 80%;
+    max-height: 4em;
+    max-width: 1.3em;
+    width: 100%;
+    opacity: .15;
+    justify-content: flex-end;
     &:hover {
       opacity: 1 !important;
     }
+
+    svg{
+      height: 100%;
+      width: 100%;
+    }
   }
+
 }

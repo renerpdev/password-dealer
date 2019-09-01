@@ -5,7 +5,7 @@
 <img alt="npm" src="https://img.shields.io/npm/dm/password-dealer">
 ====
 
-## <img align="center" alt="password-dealer example" src="https://raw.githubusercontent.com/2rhop/password-dealer/master/src/images/example1.gif" height=160 title="password-dealer example"/>
+## <img align="center" alt="password-dealer example" src="https://raw.githubusercontent.com/2rhop/password-dealer/master/src/images/example1.gif" height=180 title="password-dealer example"/>
 
 ### javascript tool that improves your password fields
 
@@ -13,6 +13,7 @@
 1. [Installation](#installation)
 1. [How to use it?](#use)
     - [API](#api)
+1. [Browser support](#bsupport)
 1. [Changelog](#changelog)
 1. [Further help](#help)
 
@@ -38,12 +39,12 @@ Import from HTML:
 ```html
 <head>
     ...
-    <link rel="stylesheet" href="<path-to-file>/password-dealer.min.css">
+    <link rel="stylesheet" href="<path-to-package>/dist/password-dealer.min.css">
 </head>
 
 <body>
     ...
-    <script src="<path-to-file>/password-dealer.min.js"></script>
+    <script src="<path-to-package>/dist/password-dealer.min.js"></script>
     <script>
          PasswordDealer(<options>).init();
     </script>
@@ -52,10 +53,12 @@ Import from HTML:
 
 Import from javascript:
 ```js
-import '<path-to-file>/password-dealer.min.css';
-import PasswordDealer from '<path-to-file>/password-dealer.min.js';
+import 'password-dealer/dist/password-dealer.min.css';
+import 'password-dealer';
 
-new PasswordDealer(<options>).init();
+$(function () { // using jQuery with document.ready lifecycle
+    PasswordDealer(<options>).init();
+});
 ```
 Adding css class to the input:
 ```html
@@ -63,7 +66,7 @@ Adding css class to the input:
 ```
 ### **API**
 
-- ### **PasswordDealer** Object options
+- <h3> <b>PasswordDealer</b> Object options </h3>
 
 <table style="width:100%;border:4px">
 <thead>
@@ -187,6 +190,21 @@ Adding css class to the input:
 </table>
  
 > **note:** This tool is also flexible it means you can customize the options whatever you prefer
+
+<h2 id="bsupport">Browser Support <i><small>(tested ones)</small></i></h2>
+
+### These are the browsers that show up pretty well the styles:
+
+    - Google Chrome **74+**
+    - Opera **62+**
+    - Microsoft Edge **41+**
+    - Microsoft Internet Exporer **11+**
+    - Mozilla Firefox **64+**
+
+### This tools uses *ResizeObserver api* for correctly set the dimensions of the input wrapper. These are some browsers that support it:
+
+    - Google Chrome **74+**
+    - Opera **62+**
 
 ## Changelog
 

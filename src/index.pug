@@ -4,4 +4,12 @@ block metatags
     title Password Dealer | Test Page
 
 block content
-    input.pwd(type="password" style="margin-top:15rem;margin-left:5rem;position:fixed")
+    form(style="padding:5rem")
+        br
+        br
+        label(for="pass" style="font-family:open sans,sans-serif") Password
+        span(style="color:red") &nbsp;*
+        input.pwd(type="password" id="pass" style="border:1px solid black;height:2rem")
+        br
+        br
+        br
