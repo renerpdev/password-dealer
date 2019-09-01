@@ -10,9 +10,10 @@ const settingsIcon = `<path d="M30.391 12.68l-3.064-0.614c-0.154-0.443-0.336-0.8
 export default class PasswordDealer {
     constructor(options) {
         this.toolboxes = [];
-        this.inputs = [];
-        this.generator = new PasswordGenerator();
         this.options = this.addProperties(options) // fill with all properties even the avoid ones
+        this.generator = (opts) => {
+            return new PasswordGenerator(opts);
+        };
     }
 
     addProperties(opts) {
@@ -107,8 +108,8 @@ export default class PasswordDealer {
     }
 
     init() {
-        this.setContainerTo(this.getPwdInputs());
         ((p) => {
+            p.setContainerToInputs();
             document.addEventListener('click', function (ev) {
                 const elem = ev.target;
                 if (!elem.classList.contains('pwd-toggle') && !elem.classList.contains('pwd-toolbox__button')) {
@@ -118,7 +119,7 @@ export default class PasswordDealer {
         })(this);
     }
 
-    getPwdInputs() {
+    setContainerToInputs() {
         const inputs = document.getElementsByClassName('pwd');
         for (let i = 0; i < inputs.length; i++) {
             const input = inputs[i];
@@ -129,59 +130,51 @@ export default class PasswordDealer {
                 input.addEventListener('resize', function () {
                     console.log(cambio)
                 });
-                this.inputs.push(input);
-            }
-        }
-        return this.inputs.length > 0 ? this.inputs : null;
-    }
 
-    setContainerTo(arr) {
-        arr = arr || [];
-        for (let i = 0; i < arr.length; i++) {
-            const input = arr[i];
-            input.addEventListener('focus', function (ev) {
-                const next = ev.target.nextSibling;
-                if (next.classList.contains('pwd-toggle')) {
-                    next.style.opacity = 1;
+                input.addEventListener('focus', function (ev) {
+                    const next = ev.target.nextSibling;
+                    if (next.classList.contains('pwd-toggle')) {
+                        next.style.opacity = 1;
+                    }
+                });
+                input.addEventListener('blur', function (ev) {
+                    const next = ev.target.nextSibling;
+                    if (next.classList.contains('pwd-toggle')) {
+                        next.style.opacity = 0.15;
+                    }
+                });
+                const parent = input.parentNode;
+                const parentNodes = parent.children;
+                let position = -1;
+                for (let i = 0; i < parentNodes.length; i++) {
+                    let attr = parentNodes[i].getAttributeNode('data-id');
+                    attr = (attr !== null) ? attr.value : attr;
+                    if (attr === input.getAttribute('data-id')) {
+                        position = i;
+                    }
                 }
-            });
-            input.addEventListener('blur', function (ev) {
-                const next = ev.target.nextSibling;
-                if (next.classList.contains('pwd-toggle')) {
-                    next.style.opacity = 0.15;
+                const box = document.createElement('div');
+                box.classList.add('pwd-item');
+                box.appendChild(input);
+                box.setAttribute('id', 'pwd-item-' + i);
+                // let computedStyles = (document.defaultView.getComputedStyle(input, null).cssText.split(';'));
+                ['marginTop', 'marginBottom', 'marginRight', 'marginLeft', 'margin', 'position', 'left', 'right',
+                    'top', 'bottom'].forEach(prop => {
+                    box.style[prop] = input.style[prop];
+                    input.style[prop] = "";
+                });
+                if (window.ResizeObserver !== undefined) {
+                    new ResizeObserver(() => {
+                        box.style.height = input.offsetHeight + 'px';
+                    }).observe(input)
+                } else {
+                    console.log('Your Browser does not support ResizeObserver api!')
                 }
-            });
-            const parent = input.parentNode;
-            const parentNodes = parent.children;
-            let position = -1;
-            for (let i = 0; i < parentNodes.length; i++) {
-                let attr = parentNodes[i].getAttributeNode('data-id');
-                attr = (attr !== null) ? attr.value : attr;
-                if (attr === input.getAttribute('data-id')) {
-                    position = i;
-                }
+                box.style.width = input.style.width;
+                input.style.width = '100%';
+                this.addTolBoxTo(box);
+                parent.insertBefore(box, parent.children[position]);// insert the wrapper in the exact input's position
             }
-            const box = document.createElement('div');
-            box.classList.add('pwd-item');
-            box.appendChild(input);
-            box.setAttribute('id', 'pwd-item-' + i);
-            // let computedStyles = (document.defaultView.getComputedStyle(input, null).cssText.split(';'));
-            ['marginTop', 'marginBottom', 'marginRight', 'marginLeft', 'margin', 'position', 'left', 'right',
-                'top', 'bottom'].forEach(prop => {
-                box.style[prop] = input.style[prop];
-                input.style[prop] = "";
-            });
-            if (window.ResizeObserver !== undefined) {
-                new ResizeObserver(() => {
-                    box.style.height = input.offsetHeight+'px';
-                }).observe(input)
-            } else {
-                console.log('Your Browser does not support ResizeObserver api!')
-            }
-            box.style.width = input.style.width;
-            input.style.width = '100%';
-            this.addTolBoxTo(box);
-            parent.insertBefore(box, parent.children[position]);// insert the wrapper in the exact input's position
         }
     }
 
@@ -209,6 +202,7 @@ export default class PasswordDealer {
 
         // add TOGGLE button
         const toolBoxToggle = document.createElement('span');
+        toolBoxToggle.setAttribute('title', 'password-dealer settings');
         toolBoxToggle.classList.add('pwd-toggle');
         toolBoxToggle.innerHTML = this.getFormattedIcon(settingsIcon, 'settings');
         toolBoxToggle.addEventListener('click', function () {
@@ -248,6 +242,6 @@ export default class PasswordDealer {
                 return new PasswordGenerator(generator).getPassword()
             }
         }
-        return this.generator.getPassword();
+        return this.generator().getPassword();
     }
 }
